@@ -6,13 +6,17 @@
   </head>
   <body>
     <h1><%= @article.title %></h1>
-    <p><%= @article.body %></p>
+    <p style="white-space: pre-wrap"><%= @article.body %></p>
     <%= link_to "Edit", edit_article_path(@article) %>
-    <%= link_to "Delete", article_path(@article), method: :delete,
-        data: {confirm: "Sure wanna delete?"} %>
-    <%= link_to "<< Back to Articles List", articles_path %>
+    <%= link_to "Delete", article_path(@article), method: :delete, data: {confirm: "Sure wanna delete?"} %>
 
-    <h3>Comments</h3>
+    <!-- Add comment form -->
+    <%= render partial: 'comments/form' %>
+
+    <!-- Showing Comments Section -->
+    <h3>Comments (<%= @article.comments.count %>)</h3>
     <%= render partial: 'articles/comment', collection: @article.comments %>
+
+    <%= link_to "<< Back to Articles List", articles_path %>
   </body>
 </html>

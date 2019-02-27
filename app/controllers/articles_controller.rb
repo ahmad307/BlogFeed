@@ -5,6 +5,8 @@ class ArticlesController < ApplicationController
 
   def show
     @article = Article.find(params[:id])
+    @comment = Comment.new
+    @comment.article_id = @article.id
   end
 
   def new
@@ -21,6 +23,10 @@ class ArticlesController < ApplicationController
 
   def destroy
     id = params[:id]
+
+    # Destroy article comments before deleting the article
+    Article.find(id).comments.destroy_all
+
     Article.all.destroy(id)
     redirect_to articles_path
   end
